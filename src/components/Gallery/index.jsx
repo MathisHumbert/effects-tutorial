@@ -38,7 +38,8 @@ function GalleryItem({
   index,
 }) {
   return (
-    <div className="gallery-item-wrapper">
+    <div className="gallery-item-wrapper" data-scroll-section>
+      <div />
       <div className="gallery-item">
         <div className="gallery-item-info">
           <h1 className="gallery-info-title">{title}</h1>
@@ -50,6 +51,7 @@ function GalleryItem({
           style={{ backgroundImage: `url(${src})` }}
         ></div>
       </div>
+      <div />
     </div>
   );
 }
