@@ -1,0 +1,28 @@
+.gallery-wrap {
+  background-color: #d53f41;
+  margin-left: -5vw;
+  margin-right: -5vw;
+
+  .gallery-counter {
+    position: absolute;
+    top: 10%;
+    left: 100px;
+    z-index: 1;
+    mix-blend-mode: difference;
+    line-height: 16px;
+    color: #dbd8d6;
+    font-family: 'Bai Jamjuree';
+    font-weight: 600;
+    font-size: 16px;
+    display: inline-block;
+
+    .divider {
+      content: '';
+      background-color: white;
+      width: 6.25vw;
+      margin: 7px 10px;
+      height: 1px;
+      display: inline-block;
+    }
+  }
+}
