@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import gsap from 'gsap';
+import useOnScreen from '../../hooks/useOnScreen';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+import cn from 'classnames';
 
 import './style.scss';
 
@@ -37,8 +41,20 @@ function GalleryItem({
   updateActiveImage,
   index,
 }) {
+  const ref = useRef(null);
+  const onScreen = useOnScreen(ref, 0.5);
+
+  useEffect(() => {
+    if (onScreen) {
+      updateActiveImage(index);
+    }
+  }, [onScreen, index]);
+
   return (
-    <div className="gallery-item-wrapper" data-scroll-section>
+    <div
+      className={cn('gallery-item-wrapper', { 'is-reveal': onScreen })}
+      ref={ref}
+    >
       <div />
       <div className="gallery-item">
         <div className="gallery-item-info">
@@ -59,9 +75,40 @@ function GalleryItem({
 export default function Gallery() {
   const [activeImage, setActiveImage] = useState(1);
 
+  const ref = useRef(null);
+
+  useEffect(() => {
+    // This does not seem to work without a settimeout
+    setTimeout(() => {
+      console.log(ref.current.offsetWidth);
+      console.log(ref.current.clientWidth);
+      console.log({ current: ref.current });
+      let sections = gsap.utils.toArray('.gallery-item-wrapper');
+
+      gsap.to(sections, {
+        xPercent: -100 * (sections.length - 1),
+        ease: 'none',
+        scrollTrigger: {
+          start: 'top top',
+          trigger: ref.current,
+          scroller: '#main-container',
+          pin: true,
+          scrub: 0.5,
+          snap: 1 / (sections.length - 1),
+          end: () => `+=${ref.current.offsetWidth}`,
+        },
+      });
+      ScrollTrigger.refresh();
+    });
+  }, []);
+
+  const handleUpdateActiveImage = (index) => {
+    setActiveImage(index + 1);
+  };
+
   return (
-    <section className="section-wrapper gallery-wrap">
-      <div className="gallery">
+    <section className="section-wrapper gallery-wrap" data-scroll-section>
+      <div className="gallery" ref={ref}>
         <div className="gallery-counter">
           <span>{activeImage}</span>
           <span className="divider" />
@@ -73,7 +120,7 @@ export default function Gallery() {
               key={image.src}
               index={index}
               {...image}
-              updateActiveImage={(index) => setActiveImage(index + 1)}
+              updateActiveImage={handleUpdateActiveImage}
             />
           );
         })}

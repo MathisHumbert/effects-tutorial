@@ -1,14 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import SectionHeader from '../SectionHeader';
 import gsap from 'gsap';
+import cn from 'classnames';
 import SplitText from '../../utils/Split3.min';
 import useOnScreen from '../../hooks/useOnScreen';
 import './style.scss';
 
 export default function About() {
-  const reveal = useRef();
+  const ref = useRef();
+  const [reveal, setReveal] = useState(false);
+  const onScreen = useOnScreen(ref);
 
-  const onScreen = useOnScreen(reveal);
+  useEffect(() => {
+    if (onScreen) setReveal(onScreen);
+  }, [onScreen]);
+
   useEffect(() => {
     if (reveal) {
       const split = new SplitText('#headline', {
@@ -26,9 +32,9 @@ export default function About() {
   }, [reveal]);
 
   return (
-    <section className={'about-section'} data-scroll-section>
+    <section className="about-section" data-scroll-section>
       <SectionHeader title="about" />
-      <p id="headline" ref={reveal}>
+      <p id="headline" ref={ref} className={cn({ 'is-reveal': reveal })}>
         Flirty Flowers is a blog about flowers and the floral designers who make
         them into art. Creativity and the art of ‘making’ require dialogue. The
         full purpose of the Flirty Flowers blog is to encourage and inspire. We
