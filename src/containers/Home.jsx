@@ -8,11 +8,15 @@ import About from '../components/About';
 import Gallery from '../components/Gallery';
 
 import '../styles/home.scss';
+import useLocalScroll from '../hooks/useLocalScroll';
 
 const Home = () => {
   const [preloader, setPreloader] = useState(true);
   const [timer, setTimer] = useState(3);
   const id = useRef(null);
+
+  // locomotive scroll
+  useLocalScroll(!preloader);
 
   const clear = () => {
     window.clearInterval(id.current);
