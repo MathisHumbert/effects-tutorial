@@ -7,7 +7,7 @@ export default function useLocalScroll(start) {
     if (!start) return;
 
     const scrollEl = document.querySelector('#main-container');
-    const localScroll = new locomotiveScroll({
+    new locomotiveScroll({
       el: scrollEl,
       smooth: true,
       multiplier: 1,

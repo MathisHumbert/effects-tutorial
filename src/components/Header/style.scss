@@ -24,3 +24,10 @@
     font-weight: 600;
   }
 }
+
+.lineChildren {
+  transform: translate(0, 500px);
+}
+.lineParent {
+  overflow: hidden;
+}

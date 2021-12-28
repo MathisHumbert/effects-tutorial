@@ -1,8 +1,29 @@
-import React from 'react';
-
+import React, { useEffect } from 'react';
 import './style.scss';
+import gsap from 'gsap';
+import SplitText from '../../utils/Split3.min';
 
 export default function Header() {
+  useEffect(() => {
+    const split = new SplitText('#header-text', {
+      type: 'lines',
+      linesClass: 'lineChildren',
+    });
+
+    new SplitText('#header-text', {
+      type: 'lines',
+      linesClass: 'lineParent',
+    });
+
+    gsap.to(split.lines, {
+      duration: 1,
+      y: 0,
+      opacity: 1,
+      stagger: 0.1,
+      ease: 'power2',
+    });
+  }, []);
+
   return (
     <section className="header-container" data-scroll-section>
       <ul className="header-menu">
