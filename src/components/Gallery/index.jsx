@@ -48,6 +48,7 @@ function GalleryItem({
     if (onScreen) {
       updateActiveImage(index);
     }
+    // eslint-disable-next-line
   }, [onScreen, index]);
 
   return (
@@ -56,14 +57,14 @@ function GalleryItem({
       ref={ref}
     >
       <div />
-      <div className="gallery-item">
-        <div className="gallery-item-info">
-          <h1 className="gallery-info-title">{title}</h1>
-          <h6 className="gallery-info-subtitle">{subtitle}</h6>
-          <p className="gallery-info-category">{category}</p>
+      <div className='gallery-item'>
+        <div className='gallery-item-info'>
+          <h1 className='gallery-info-title'>{title}</h1>
+          <h6 className='gallery-info-subtitle'>{subtitle}</h6>
+          <p className='gallery-info-category'>{category}</p>
         </div>
         <div
-          className="gallery-item-image"
+          className='gallery-item-image'
           style={{ backgroundImage: `url(${src})` }}
         ></div>
       </div>
@@ -80,9 +81,6 @@ export default function Gallery() {
   useEffect(() => {
     // This does not seem to work without a settimeout
     setTimeout(() => {
-      console.log(ref.current.offsetWidth);
-      console.log(ref.current.clientWidth);
-      console.log({ current: ref.current });
       let sections = gsap.utils.toArray('.gallery-item-wrapper');
 
       gsap.to(sections, {
@@ -107,11 +105,11 @@ export default function Gallery() {
   };
 
   return (
-    <section className="section-wrapper gallery-wrap" data-scroll-section>
-      <div className="gallery" ref={ref}>
-        <div className="gallery-counter">
+    <section className='section-wrapper gallery-wrap' data-scroll-section>
+      <div className='gallery' ref={ref}>
+        <div className='gallery-counter'>
           <span>{activeImage}</span>
-          <span className="divider" />
+          <span className='divider' />
           <span>{images.length}</span>
         </div>
         {images.map((image, index) => {
